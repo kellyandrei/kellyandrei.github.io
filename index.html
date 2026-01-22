@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg: #0A0A0A;
-            --accent: #00FF41; /* The Neon Green */
+            --accent: #2bf05d; /* The Neon Green */
             --text-dim: #444;
             --border: #1A1A1A;
             --card-bg: rgba(15, 15, 15, 0.9);
@@ -212,12 +212,18 @@
     <script>
         // 1. DYNAMIC DATE & TIME
         function updateClock() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const time = now.toLocaleTimeString('en-GB', { hour12: false });
-            document.getElementById('live-time').innerText = `TIME: ${year}.${month}.${day} ${time} PST // PORT: 8080`;
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const time = now.toLocaleTimeString('en-GB', { hour12: false });
+    
+        // DYNAMIC TIMEZONE LOGIC
+        const tzString = now.toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ');
+        const tzAcronym = tzString[tzString.length - 1]; 
+    
+        document.getElementById('live-time').innerText = 
+            `TIME: ${year}.${month}.${day} ${time} ${tzAcronym} // PORT: 8080`;
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -228,7 +234,7 @@
             const row = document.createElement('div');
             row.className = 'coord-row';
             // Placeholder Lat/Long style
-            row.innerHTML = `[ 7.6${(0+i)} N ]`; 
+            row.innerHTML = `[ 7.${(0+i)} N ]`; 
             gutter.appendChild(row);
         }
 
@@ -245,7 +251,7 @@
                     row.classList.remove('active-row');
                     // Reset to coordinate style
                     const index = Array.from(rows).indexOf(row);
-                    row.innerText = `[ 7.6${(0+index)} N ]`;
+                    row.innerText = `[ 7.${(0+index)} N ]`;
                 }
             });
         });
