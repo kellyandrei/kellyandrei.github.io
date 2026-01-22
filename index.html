@@ -287,14 +287,36 @@
         }
 
         // DEBUGGER TRAP
-        setInterval(function() {
-          const start = new Date();
-          debugger; 
-          const end = new Date();
-          if (end - start > 100) {
-            document.body.innerHTML = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; color:#2bf05d; font-family:monospace;'><h1>SYSTEM_LOCK: UNAUTHORIZED_INSPECTION_DETECTED</h1></div>";
-          }
-        }, 1000);
+        // TOTAL_SYSTEM_PURGE_PROTOCOL
+        (function() {
+            const purge = function() {
+                setInterval(function() {
+                    const start = new Date();
+                    debugger; 
+                    const end = new Date();
+                    
+                    // If the time gap is > 100ms, the browser was paused by DevTools
+                    if (end - start > 100) {
+                        // 1. Wipe the UI immediately
+                        document.documentElement.innerHTML = "";
+                        
+                        // 2. Clear session storage (optional but professional)
+                        sessionStorage.clear();
+                        
+                        // 3. Force-redirect to a blank state
+                        // This effectively "closes" your content from the viewer
+                        window.location.replace("about:blank");
+                    }
+                }, 200); // High-frequency check (every 0.2 seconds)
+            };
+        
+            try {
+                purge();
+            } catch (e) {
+                // Fail-safe: if the script is blocked, wipe the body
+                document.body.innerHTML = "FATAL_SYSTEM_ERROR: SECURITY_INTEGRITY_COMPROMISED";
+            }
+        })();
     </script>
 </body>
 </html>
