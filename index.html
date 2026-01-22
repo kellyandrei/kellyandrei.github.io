@@ -83,6 +83,15 @@
             width: calc(100% - 80px); /* Adjusts width based on gutter */
         }
 
+        .loc-meta {
+        font-family: monospace;
+        font-size: 11px;
+        color: var(--accent); /* Changed from --text-dim to --accent */
+        margin-bottom: 20px;
+        opacity: 0.8; /* Keeps it subtle but readable */
+        letter-spacing: 1px;
+        }
+
         h1 {
             font-size: clamp(1.8rem, 5vw, 4.5rem);
             font-weight: 800;
@@ -145,8 +154,9 @@
                 grid-row: span 1 !important; 
                 min-height: 150px;
             }
-            .coord-row { font-size: 8px; padding: 5px; }
-            .sub-headline { font-size: 14px; }
+            .coord-row { font-size: 7px; padding: 5px; }
+            .sub-headline { font-size: 10px; }
+            .loce-meta {font-size: 6px;}
         }
 
         .explore-btn {
