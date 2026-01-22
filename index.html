@@ -3,87 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KELLY_ESPINO // SYSTEM_LOG</title>
+    <title>KELLY_ESPINO | SYSTEMS_DESIGNER</title>
     <style>
+        :root {
+            --bg: #0A0A0A;
+            --accent: #00FF41;
+            --text-dim: #666;
+            --border: #1A1A1A;
+            --card-bg: #111;
+        }
+
         body {
-            background-color: #0A0A0A;
-            color: #00FF41; /* Terminal Green */
-            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', -apple-system, monospace;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* The Vertical Gutter from your Framer Design */
+        .gutter {
+            width: 60px;
+            border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            padding-top: 20px;
+            color: var(--text-dim);
+            font-family: monospace;
+            font-size: 12px;
+            flex-shrink: 0;
         }
 
-        .terminal-container {
-            width: 80%;
-            max-width: 600px;
-            border: 1px solid #333;
+        .line-number { margin-bottom: 20px; }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1;
+            padding: 40px;
+            max-width: 1200px;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: space-between;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .sub-headline {
+            color: var(--text-dim);
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            line-height: 1.6;
+        }
+
+        /* Bento Grid Setup */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+            min-height: 200px;
+            font-family: monospace;
+            transition: border 0.3s ease;
         }
 
-        .header {
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 0.8rem;
-            opacity: 0.7;
+        .card:hover { border-color: var(--accent); }
+
+        .card-label {
+            color: var(--accent);
+            font-size: 10px;
+            margin-bottom: 15px;
+            display: block;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: #00FF41;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        a {
-            color: #fff;
+        .btn {
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+            padding: 10px 20px;
             text-decoration: none;
-            border: 1px solid #00FF41;
-            padding: 5px 10px;
-            margin-top: 20px;
             display: inline-block;
-            transition: 0.3s;
+            font-family: monospace;
+            font-size: 14px;
         }
 
-        a:hover {
-            background: #00FF41;
-            color: #000;
+        .btn:hover {
+            background: var(--accent);
+            color: black;
         }
     </style>
 </head>
 <body>
 
-    <div class="terminal-container">
-        <div class="header">
-            USER: KELLY_ESPINO // LOC: MNL_PH // STATUS: ACTIVE
-        </div>
-        <div>
-            <p>> INITIALIZING PORTFOLIO_V1.0...</p>
-            <p>> LOADING TECHNICAL_CREATIVE_ASSETS...</p>
-            <p>> SYSTEM READY.</p>
-            <br>
-            <p style="color: white; font-size: 1.5rem;">KELLY ESPINO</p>
-            <p>SYSTEMS DESIGNER & IT STUDENT</p>
-            <br>
-            <p>> [INFO] This is my technical repository. For the full visual experience, visit my main site below.</p>
-            
-            <a href="#">ENTER_VISUAL_PORTFOLIO</a>
-            <span class="cursor"></span>
-        </div>
+    <div class="gutter">
+        <div class="line-number">01</div>
+        <div class="line-number">02</div>
+        <div class="line-number">03</div>
+        <div class="line-number">04</div>
+        <div class="line-number">05</div>
     </div>
+
+    <main>
+        <div class="header-meta">
+            <span>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</span>
+            <span>MNL_PH // 2026.01.22</span>
+        </div>
+
+        <section class="hero">
+            <p style="font-family: monospace; font-size: 12px; color: var(--text-dim);">LOC // MNL_PH // INT_ARCH_V1.0</p>
+            <h1>SYSTEMS DESIGNER & <br>TECHNICAL CREATIVE</h1>
+            <p class="sub-headline">Building intentional digital foundations through technical logic and creative vision.</p>
+            <a href="#" class="btn">EXPLORE_REPOSITORIES</a>
+        </section>
+
+        <div class="bento-grid">
+            <div class="card" style="grid-row: span 2;">
+                <span class="card-label">CAT_01 // INTERFACE_DESIGN</span>
+                <p>UI/UX Architecture & Prototyping</p>
+            </div>
+            <div class="card">
+                <span class="card-label">CAT_02 // SYSTEM_LOGIC</span>
+                <p>Backend Workflows & Databases</p>
+            </div>
+            <div class="card">
+                <span class="card-label">CAT_03 // TECHNICAL_LAB</span>
+                <p>Experimental Code & Scripts</p>
+            </div>
+            <div class="card" style="grid-column: span 2;">
+                <span class="card-label">MODULE_04 // DATA_VISUALIZATION</span>
+                <p>Automated User Flow Analysis</p>
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>
