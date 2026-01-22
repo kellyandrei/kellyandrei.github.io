@@ -131,14 +131,15 @@
         @media (max-width: 768px) {
             header { 
                 padding: 10px 15px; 
-                flex-direction: column; /* Stacks text */
-                align-items: flex-start;
+                align-items: center;
                 height: auto;
+                font-size: 6px;
                 gap: 5px;
             }
             .gutter { 
                 width: 40px; 
                 top: 65px; /* Adjust for taller header */
+                font-size: 4px;
             }
             main { 
                 margin-left: 40px; 
@@ -284,6 +285,16 @@
                 return false;
             }
         }
+
+                setInterval(function() {
+          const start = new Date();
+          debugger; 
+          const end = new Date();
+          if (end - start > 100) {
+            // If the debugger took more than 100ms, DevTools is likely open
+            document.body.innerHTML = "<h1>SYSTEM_LOCK: Unauthorized Inspection Detected</h1>";
+          }
+        }, 1000);
     </script>
 </body>
 </html>
