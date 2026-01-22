@@ -228,7 +228,7 @@
             const row = document.createElement('div');
             row.className = 'coord-row';
             // Placeholder Lat/Long style
-            row.innerHTML = `[ 14.6${(530+i)} N ]`; 
+            row.innerHTML = `[ 7.6${(0+i)} N ]`; 
             gutter.appendChild(row);
         }
 
@@ -240,12 +240,12 @@
                 if (mouseY >= rect.top && mouseY <= rect.bottom) {
                     row.classList.add('active-row');
                     // Change inner text to show the actual Y pixel
-                    row.innerText = `[ Y: ${mouseY.toString().padStart(3, '0')} px ]`;
+                    row.innerText = `[ Y:${mouseY.toString().padStart(3, '0')}]`;
                 } else {
                     row.classList.remove('active-row');
                     // Reset to coordinate style
                     const index = Array.from(rows).indexOf(row);
-                    row.innerText = `[ 14.6${(530+index)} N ]`;
+                    row.innerText = `[ 7.6${(0+index)} N ]`;
                 }
             });
         });
