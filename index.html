@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KELLY_ESPINO // SYSTEM_LOG</title>
+    <style>
+        body {
+            background-color: #0A0A0A;
+            color: #00FF41; /* Terminal Green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .terminal-container {
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid #333;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .header {
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00FF41;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #00FF41;
+            padding: 5px 10px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #00FF41;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-container">
+        <div class="header">
+            USER: KELLY_ESPINO // LOC: MNL_PH // STATUS: ACTIVE
+        </div>
+        <div>
+            <p>> INITIALIZING PORTFOLIO_V1.0...</p>
+            <p>> LOADING TECHNICAL_CREATIVE_ASSETS...</p>
+            <p>> SYSTEM READY.</p>
+            <br>
+            <p style="color: white; font-size: 1.5rem;">KELLY ESPINO</p>
+            <p>SYSTEMS DESIGNER & IT STUDENT</p>
+            <br>
+            <p>> [INFO] This is my technical repository. For the full visual experience, visit my main site below.</p>
+            
+            <a href="#">ENTER_VISUAL_PORTFOLIO</a>
+            <span class="cursor"></span>
+        </div>
+    </div>
+
+</body>
+</html>
