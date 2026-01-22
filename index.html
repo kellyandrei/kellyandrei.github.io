@@ -287,22 +287,33 @@
         }
 
       // TOTAL_SYSTEM_PURGE_V2
+        // STABLE_LOCK_PROTOCOL
         (function() {
-            const checkLogic = function() {
-                const start = new Date();
-                // Using Function constructor to bypass browser console protection
-                (function() {}.constructor("debugger")()); 
-                const end = new Date();
-                
-                if (end - start > 100) {
-                    document.documentElement.innerHTML = "";
-                    window.location.replace("about:blank");
+            const lock = function() {
+                // This loop runs continuously
+                while (true) {
+                    const start = Date.now();
+                    debugger; // The browser will pause here
+                    const end = Date.now();
+        
+                    // If they click 'Resume', the loop immediately hits 'debugger' again
+                    if (end - start > 100) {
+                        // If they manage to skip the debugger, we wipe the content
+                        document.body.innerHTML = "SYSTEM_LOCK: INTEGRITY_VIOLATION";
+                        break; 
+                    }
                 }
             };
         
-            // Run immediately and then on a tight interval
-            setInterval(checkLogic, 100);
-        });
+            // Trigger the lock only if DevTools is detected
+            setInterval(function() {
+                const start = Date.now();
+                debugger; 
+                if (Date.now() - start > 100) {
+                    lock();
+                }
+            }, 500);
+        })();
     </script>
 </body>
 </html>
