@@ -57,11 +57,22 @@
             border-right: 1.5px solid var(--gutter-border);
             position: fixed;
             top: 40px;
+            bottom: 0; 
             height: calc(100vh - 40px);
             background: var(--bg);
             display: flex;
             flex-direction: column;
             z-index: 100;
+        }
+
+        .gutter::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1.5px;
+        height: 100%; /* Relative to the gutter container */
+        background-color: var(--gutter-border);
         }
 
         .coord-row {
@@ -168,7 +179,7 @@
 
     <header>
         <div class="status-container">
-            <span>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</span>
+            <span>USER: KELLY_ESPINO // STATUS:</span>
             <span id="reply-status">[ INITIALIZING ]</span>
         </div>
         <div id="live-time">KELLY_SYNC_TIME: --.--.-- 00:00:00 PHT</div>
@@ -177,7 +188,7 @@
     <div class="gutter" id="coord-gutter"></div>
 
     <main>
-        <div class="loc-meta">LOC // MNL_PH // INT_ARCH_V1.0</div>
+        <div class="loc-meta">KELLY'S LOC // MNL_PH // INT_ARCH_V1.0</div>
         
         <h1>SYSTEMS DESIGNER &<br>TECHNICAL CREATIVE</h1>
         
@@ -276,6 +287,7 @@
             if(e.keyCode == 123) { return false; } 
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } 
             if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } 
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
         }
     </script>
