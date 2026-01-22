@@ -3,46 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KELLY_ESPINO | SYSTEMS_DESIGNER</title>
+    <title>KELLY_ESPINO // SYSTEMS_DESIGNER</title>
     <style>
         :root {
             --bg: #0A0A0A;
             --accent: #00FF41;
-            --text-dim: #666;
+            --text-dim: #444;
             --border: #1A1A1A;
-            --card-bg: #111;
+            --card-bg: rgba(17, 17, 17, 0.8);
         }
 
         body {
             background-color: var(--bg);
+            /* 1. DOTTED BACKGROUND */
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
             color: white;
-            font-family: 'Inter', -apple-system, monospace;
+            font-family: 'Inter', sans-serif;
             margin: 0;
             display: flex;
-            min-height: 100vh;
+            min-height: 200vh; /* Extra height to test scroll */
         }
 
-        /* The Vertical Gutter from your Framer Design */
         .gutter {
-            width: 60px;
+            width: 80px;
             border-right: 1px solid var(--border);
+            position: fixed; /* Stays put while scrolling */
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             padding-top: 20px;
             color: var(--text-dim);
             font-family: monospace;
-            font-size: 12px;
-            flex-shrink: 0;
+            font-size: 11px;
+            background: var(--bg);
+            z-index: 10;
         }
 
-        .line-number { margin-bottom: 20px; }
+        /* 2. DYNAMIC COORDINATE STYLE */
+        .coord-item {
+            padding: 5px 10px;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
 
-        /* Main Content Area */
+        .active-coord {
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--accent);
+        }
+
         main {
+            margin-left: 80px;
             flex-grow: 1;
             padding: 40px;
-            max-width: 1200px;
         }
 
         .header-meta {
@@ -52,112 +64,98 @@
             font-size: 12px;
             color: var(--accent);
             margin-bottom: 60px;
-            text-transform: uppercase;
+            position: sticky;
+            top: 40px;
         }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 80px;
-        }
+        .hero { text-align: center; margin-top: 10vh; margin-bottom: 100px; }
+        h1 { font-size: 3.5rem; text-transform: uppercase; letter-spacing: -2px; }
 
-        h1 {
-            font-size: 3rem;
-            letter-spacing: -2px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .sub-headline {
-            color: var(--text-dim);
-            max-width: 500px;
-            margin: 0 auto 30px auto;
-            line-height: 1.6;
-        }
-
-        /* Bento Grid Setup */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            min-height: 200px;
-            font-family: monospace;
-            transition: border 0.3s ease;
-        }
-
-        .card:hover { border-color: var(--accent); }
-
-        .card-label {
-            color: var(--accent);
-            font-size: 10px;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .btn {
-            border: 1px dashed var(--accent);
-            color: var(--accent);
-            padding: 10px 20px;
-            text-decoration: none;
-            display: inline-block;
-            font-family: monospace;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            background: var(--accent);
-            color: black;
+            padding: 24px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
         }
     </style>
 </head>
 <body>
 
-    <div class="gutter">
-        <div class="line-number">01</div>
-        <div class="line-number">02</div>
-        <div class="line-number">03</div>
-        <div class="line-number">04</div>
-        <div class="line-number">05</div>
-    </div>
+    <div class="gutter" id="gutter-coords">
+        </div>
 
     <main>
         <div class="header-meta">
             <span>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</span>
-            <span>MNL_PH // 2026.01.22</span>
+            <span id="live-clock">TIME: 0000.00.00 00:00:00 PST</span>
         </div>
 
         <section class="hero">
-            <p style="font-family: monospace; font-size: 12px; color: var(--text-dim);">LOC // MNL_PH // INT_ARCH_V1.0</p>
-            <h1>SYSTEMS DESIGNER & <br>TECHNICAL CREATIVE</h1>
-            <p class="sub-headline">Building intentional digital foundations through technical logic and creative vision.</p>
-            <a href="#" class="btn">EXPLORE_REPOSITORIES</a>
+            <h1>SYSTEMS DESIGNER</h1>
+            <p style="color: var(--text-dim)">[ ARCHITECTURE_PORTFOLIO_V1 ]</p>
         </section>
 
         <div class="bento-grid">
-            <div class="card" style="grid-row: span 2;">
-                <span class="card-label">CAT_01 // INTERFACE_DESIGN</span>
-                <p>UI/UX Architecture & Prototyping</p>
-            </div>
-            <div class="card">
-                <span class="card-label">CAT_02 // SYSTEM_LOGIC</span>
-                <p>Backend Workflows & Databases</p>
-            </div>
-            <div class="card">
-                <span class="card-label">CAT_03 // TECHNICAL_LAB</span>
-                <p>Experimental Code & Scripts</p>
-            </div>
-            <div class="card" style="grid-column: span 2;">
-                <span class="card-label">MODULE_04 // DATA_VISUALIZATION</span>
-                <p>Automated User Flow Analysis</p>
-            </div>
+            <div class="card" style="grid-row: span 2;">DATA_VAULT</div>
+            <div class="card">LOGIC_FLOW</div>
+            <div class="card">INTERFACE_LAB</div>
+            <div class="card" style="grid-column: span 2;">CORE_SYSTEM_ANALYTICS</div>
         </div>
     </main>
 
+    <script>
+        // 1. DYNAMIC DATE & TIME
+        function updateClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const time = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('live-clock').innerText = `TIME: ${year}.${month}.${day} ${time} PST`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. DYNAMIC GUTTER COORDINATES
+        const gutter = document.getElementById('gutter-coords');
+        const totalItems = 30; // Number of "coordinates" to show in the side
+        
+        // Generate coordinates
+        for(let i=0; i < totalItems; i++) {
+            const div = document.createElement('div');
+            div.className = 'coord-item';
+            // Generating semi-random architectural "lat/long" style numbers
+            div.innerText = `14.${(6500 + i*10)} N`;
+            gutter.appendChild(div);
+        }
+
+        const coordElements = document.querySelectorAll('.coord-item');
+
+        // TRACK MOUSE Y-AXIS
+        window.addEventListener('mousemove', (e) => {
+            const mouseY = e.clientY;
+            
+            coordElements.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                const elCenter = rect.top + rect.height / 2;
+                
+                // If mouse is near the element's Y position
+                if (Math.abs(mouseY - elCenter) < 20) {
+                    el.classList.add('active-coord');
+                } else {
+                    el.classList.remove('active-coord');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
