@@ -7,17 +7,18 @@
     <style>
         :root {
             --bg: #0A0A0A;
-            --accent: #2bf05d; /* The Neon Green */
+            --accent: #2bf05d; /* Green */
             --text-dim: #444;
             --border: #1A1A1A;
             --gutter-border: #DDDDDD;
             --card-bg: rgba(15, 15, 15, 0.9);
             --header-bg: #262525;
+            --offline: #ff4b4b;
         }
 
+        /* PLAGIARISM PROTECTION */
         body {
             background-color: var(--bg);
-            /* THE DOTTED GRID */
             background-image: radial-gradient(var(--border) 1px, transparent 1px);
             background-size: 25px 25px;
             color: white;
@@ -25,9 +26,12 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
-        /* TOP STATUS BAR */
         header {
             position: fixed;
             top: 0;
@@ -46,7 +50,8 @@
             box-sizing: border-box;
         }
 
-        /* THE GUTTER (LEFT SIDEBAR) */
+        .status-container { display: flex; align-items: center; gap: 15px; }
+
         .gutter {
             width: 80px;
             border-right: 1.5px solid var(--gutter-border);
@@ -64,7 +69,6 @@
             font-size: 10px;
             font-family: monospace;
             color: var(--text-dim);
-            border-bottom: 1px solid transparent;
             transition: all 0.1s;
         }
 
@@ -74,7 +78,6 @@
             text-shadow: 0 0 8px var(--accent);
         }
 
-        /* MAIN CONTENT CONTAINER */
         main {
             margin-left: 80px;
             margin-top: 40px;
@@ -126,7 +129,6 @@
 
         .explore-btn:hover { background: var(--accent); color: black; }
 
-        /* BENTO GRID */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -165,8 +167,11 @@
 <body>
 
     <header>
-        <div>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</div>
-        <div id="live-time">TIME: 2026.01.22 00:00:00 PST // PORT: 8080</div>
+        <div class="status-container">
+            <span>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</span>
+            <span id="reply-status">[ INITIALIZING ]</span>
+        </div>
+        <div id="live-time">KELLY_SYNC_TIME: --.--.-- 00:00:00 PHT</div>
     </header>
 
     <div class="gutter" id="coord-gutter"></div>
@@ -211,30 +216,41 @@
     </main>
 
     <script>
-        // 1. DYNAMIC DATE & TIME
         function updateClock() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const time = now.toLocaleTimeString('en-GB', { hour12: false });
-    
-        // DYNAMIC TIMEZONE LOGIC
-        const tzString = now.toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ');
-        const tzAcronym = tzString[tzString.length - 1]; 
-    
-        document.getElementById('live-time').innerText = 
-            `TIME: ${year}.${month}.${day} ${time} ${tzAcronym} // PORT: 8080`;
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Manila',
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false
+            };
+
+            const formatter = new Intl.DateTimeFormat('en-GB', options);
+            const parts = formatter.formatToParts(now);
+            const d = {};
+            parts.forEach(p => d[p.type] = p.value);
+
+            const formattedTime = `${d.hour}:${d.minute}:${d.second}`;
+            document.getElementById('live-time').innerText = 
+                `KELLY_SYNC_TIME: ${d.year}.${d.month}.${d.day} ${formattedTime} PHT`;
+
+            const hour = parseInt(d.hour);
+            const statusEl = document.getElementById('reply-status');
+            if (hour >= 8 && hour <= 21) {
+                statusEl.innerText = "[ ONLINE // LIKELY_TO_REPLY ]";
+                statusEl.style.color = "var(--accent)";
+            } else {
+                statusEl.innerText = "[ OFFLINE // DELAYED_REPLY ]";
+                statusEl.style.color = "var(--offline)";
+            }
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. INTERACTIVE COORDINATE GUTTER
         const gutter = document.getElementById('coord-gutter');
         for (let i = 0; i < 40; i++) {
             const row = document.createElement('div');
             row.className = 'coord-row';
-            // Placeholder Lat/Long style
             row.innerHTML = `[ 7.${(0+i)} N ]`; 
             gutter.appendChild(row);
         }
@@ -246,16 +262,22 @@
                 const rect = row.getBoundingClientRect();
                 if (mouseY >= rect.top && mouseY <= rect.bottom) {
                     row.classList.add('active-row');
-                    // Change inner text to show the actual Y pixel
                     row.innerText = `[ Y:${mouseY.toString().padStart(3, '0')}]`;
                 } else {
                     row.classList.remove('active-row');
-                    // Reset to coordinate style
                     const index = Array.from(rows).indexOf(row);
                     row.innerText = `[ 7.${(0+index)} N ]`;
                 }
             });
         });
+        
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) { return false; } 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } 
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
+        }
     </script>
 </body>
 </html>
