@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KELLY ESPINO | SYSTEMS_DESIGNER</title>
+    <title>KELLY ESPINO | SYSTEMS DESIGNER</title>
     <style>
         :root {
             --bg: #0A0A0A;
@@ -16,7 +16,7 @@
             --offline: #ff4b4b;
         }
 
-        * { box-sizing: border-box; } /* Prevents padding from breaking width */
+        * { box-sizing: border-box; }
 
         body {
             background-color: var(--bg);
@@ -27,7 +27,7 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden; /* Prevents side-scrolling on mobile */
+            overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
         }
@@ -80,16 +80,16 @@
             flex-direction: column;
             align-items: center;
             padding: 60px 40px;
-            width: calc(100% - 80px); /* Adjusts width based on gutter */
+            width: calc(100% - 80px);
         }
 
         .loc-meta {
-        font-family: monospace;
-        font-size: 11px;
-        color: var(--accent); /* Changed from --text-dim to --accent */
-        margin-bottom: 20px;
-        opacity: 0.8; /* Keeps it subtle but readable */
-        letter-spacing: 1px;
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.8;
+            letter-spacing: 1px;
         }
 
         h1 {
@@ -127,37 +127,37 @@
             transition: border 0.3s;
         }
 
-        /* MOBILE OVERRIDE - DOES NOT AFFECT DESKTOP */
+        /* MOBILE OVERRIDE */
         @media (max-width: 768px) {
             header { 
                 padding: 10px 15px; 
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
                 height: auto;
-                font-size: 6px;
+                font-size: 9px;
                 gap: 5px;
             }
             .gutter { 
-                width: 40px; 
-                top: 65px; /* Adjust for taller header */
-                font-size: 4px;
+                width: 45px; 
+                top: 60px;
             }
             main { 
-                margin-left: 40px; 
-                margin-top: 65px;
+                margin-left: 45px; 
+                margin-top: 60px;
                 padding: 30px 15px; 
-                width: calc(100% - 40px);
+                width: calc(100% - 45px);
             }
             .bento-grid { 
-                grid-template-columns: 1fr; /* One column only */
+                grid-template-columns: 1fr;
             }
             .card { 
                 grid-column: span 1 !important; 
                 grid-row: span 1 !important; 
                 min-height: 150px;
             }
-            .coord-row { font-size: 7px; padding: 5px; }
-            .sub-headline { font-size: 10px; }
-            .loce-meta {font-size: 6px;}
+            .coord-row { font-size: 8px; padding: 5px 2px; text-align: center; }
+            .sub-headline { font-size: 14px; }
+            .loc-meta { font-size: 9px; }
         }
 
         .explore-btn {
@@ -286,13 +286,13 @@
             }
         }
 
-                setInterval(function() {
+        // DEBUGGER TRAP
+        setInterval(function() {
           const start = new Date();
           debugger; 
           const end = new Date();
           if (end - start > 100) {
-            // If the debugger took more than 100ms, DevTools is likely open
-            document.body.innerHTML = "<h1>SYSTEM_LOCK: Unauthorized Inspection Detected</h1>";
+            document.body.innerHTML = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; color:#2bf05d; font-family:monospace;'><h1>SYSTEM_LOCK: UNAUTHORIZED_INSPECTION_DETECTED</h1></div>";
           }
         }, 1000);
     </script>
