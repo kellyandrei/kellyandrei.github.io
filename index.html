@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg: #0A0A0A;
-            --accent: #2bf05d; /* Green */
+            --accent: #2bf05d; 
             --text-dim: #444;
             --border: #1A1A1A;
             --gutter-border: #DDDDDD;
@@ -16,7 +16,8 @@
             --offline: #ff4b4b;
         }
 
-        /* PLAGIARISM PROTECTION */
+        * { box-sizing: border-box; } /* Prevents padding from breaking width */
+
         body {
             background-color: var(--bg);
             background-image: radial-gradient(var(--border) 1px, transparent 1px);
@@ -26,9 +27,8 @@
             margin: 0;
             display: flex;
             min-height: 100vh;
+            overflow-x: hidden; /* Prevents side-scrolling on mobile */
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
@@ -36,7 +36,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            height: 40px;
+            min-height: 40px;
             background: var(--header-bg);
             border-bottom: 1px solid var(--border);
             display: flex;
@@ -47,32 +47,21 @@
             font-size: 11px;
             color: var(--accent);
             z-index: 200;
-            box-sizing: border-box;
         }
 
-        .status-container { display: flex; align-items: center; gap: 15px; }
+        .status-container { display: flex; align-items: center; gap: 10px; }
 
         .gutter {
             width: 80px;
-            border-right: 1.5px solid var(--gutter-border);
             position: fixed;
             top: 40px;
             bottom: 0; 
-            height: calc(100vh - 40px);
             background: var(--bg);
             display: flex;
             flex-direction: column;
             z-index: 100;
-        }
-
-        .gutter::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 1.5px;
-        height: 100%; /* Relative to the gutter container */
-        background-color: var(--gutter-border);
+            border-right: 1.5px solid var(--gutter-border);
+            overflow: hidden;
         }
 
         .coord-row {
@@ -80,13 +69,7 @@
             font-size: 10px;
             font-family: monospace;
             color: var(--text-dim);
-            transition: all 0.1s;
-        }
-
-        .active-row {
-            color: var(--accent);
-            background: rgba(0, 255, 65, 0.05);
-            text-shadow: 0 0 8px var(--accent);
+            white-space: nowrap;
         }
 
         main {
@@ -97,23 +80,17 @@
             flex-direction: column;
             align-items: center;
             padding: 60px 40px;
-        }
-
-        .loc-meta {
-            font-family: monospace;
-            font-size: 11px;
-            color: var(--text-dim);
-            margin-bottom: 20px;
+            width: calc(100% - 80px); /* Adjusts width based on gutter */
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-size: clamp(1.8rem, 5vw, 4.5rem);
             font-weight: 800;
             text-align: center;
             text-transform: uppercase;
-            line-height: 1;
+            line-height: 1.1;
             margin: 0;
-            letter-spacing: -2px;
+            letter-spacing: -1px;
         }
 
         .sub-headline {
@@ -122,23 +99,7 @@
             max-width: 600px;
             font-size: 16px;
             margin: 30px 0;
-            line-height: 1.5;
         }
-
-        .explore-btn {
-            background: rgba(0, 255, 65, 0.2);
-            border: 1px dashed var(--accent);
-            color: var(--accent);
-            padding: 12px 24px;
-            font-family: monospace;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 13px;
-            margin-bottom: 60px;
-            transition: 0.3s;
-        }
-
-        .explore-btn:hover { background: var(--accent); color: black; }
 
         .bento-grid {
             display: grid;
@@ -154,25 +115,55 @@
             border-radius: 12px;
             padding: 24px;
             min-height: 220px;
-            display: flex;
-            flex-direction: column;
             transition: border 0.3s;
         }
 
-        .card:hover { border-color: var(--accent); }
+        /* MOBILE OVERRIDE - DOES NOT AFFECT DESKTOP */
+        @media (max-width: 768px) {
+            header { 
+                padding: 10px 15px; 
+                flex-direction: column; /* Stacks text */
+                align-items: flex-start;
+                height: auto;
+                gap: 5px;
+            }
+            .gutter { 
+                width: 40px; 
+                top: 65px; /* Adjust for taller header */
+            }
+            main { 
+                margin-left: 40px; 
+                margin-top: 65px;
+                padding: 30px 15px; 
+                width: calc(100% - 40px);
+            }
+            .bento-grid { 
+                grid-template-columns: 1fr; /* One column only */
+            }
+            .card { 
+                grid-column: span 1 !important; 
+                grid-row: span 1 !important; 
+                min-height: 150px;
+            }
+            .coord-row { font-size: 8px; padding: 5px; }
+            .sub-headline { font-size: 14px; }
+        }
 
-        .card-tag {
-            font-family: monospace;
-            font-size: 10px;
+        .explore-btn {
+            background: rgba(0, 255, 65, 0.2);
+            border: 1px dashed var(--accent);
             color: var(--accent);
-            margin-bottom: 10px;
-        }
-
-        .card-title {
+            padding: 12px 24px;
             font-family: monospace;
+            text-decoration: none;
+            text-transform: uppercase;
             font-size: 13px;
-            color: #ccc;
+            margin-bottom: 60px;
+            transition: 0.3s;
         }
+        .explore-btn:hover { background: var(--accent); color: black; }
+        .card-tag { font-family: monospace; font-size: 10px; color: var(--accent); margin-bottom: 10px; display: block; }
+        .card-title { font-family: monospace; font-size: 13px; color: #ccc; }
     </style>
 </head>
 <body>
@@ -189,13 +180,8 @@
 
     <main>
         <div class="loc-meta">KELLY'S LOC // MNL_PH // INT_ARCH_V1.0</div>
-        
         <h1>SYSTEMS DESIGNER &<br>TECHNICAL CREATIVE</h1>
-        
-        <p class="sub-headline">
-            Building intentional digital foundations through technical logic and creative vision.
-        </p>
-
+        <p class="sub-headline">Building intentional digital foundations through technical logic and creative vision.</p>
         <a href="#" class="explore-btn">EXPLORE_PROJECTS</a>
 
         <div class="bento-grid">
@@ -259,7 +245,7 @@
         updateClock();
 
         const gutter = document.getElementById('coord-gutter');
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 60; i++) {
             const row = document.createElement('div');
             row.className = 'coord-row';
             row.innerHTML = `[ 7.${(0+i)} N ]`; 
@@ -284,11 +270,9 @@
         
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) { return false; } 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
-            if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } 
-            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
+            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
         }
     </script>
 </body>
