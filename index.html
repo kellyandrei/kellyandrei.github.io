@@ -7,108 +7,205 @@
     <style>
         :root {
             --bg: #0A0A0A;
-            --accent: #00FF41;
+            --accent: #00FF41; /* The Neon Green */
             --text-dim: #444;
             --border: #1A1A1A;
-            --card-bg: rgba(17, 17, 17, 0.8);
+            --card-bg: rgba(15, 15, 15, 0.9);
+            --header-bg: #111;
         }
 
         body {
             background-color: var(--bg);
-            /* 1. DOTTED BACKGROUND */
+            /* THE DOTTED GRID */
             background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-size: 25px 25px;
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             display: flex;
-            min-height: 200vh; /* Extra height to test scroll */
+            min-height: 100vh;
         }
 
+        /* TOP STATUS BAR */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 40px;
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--accent);
+            z-index: 200;
+            box-sizing: border-box;
+        }
+
+        /* THE GUTTER (LEFT SIDEBAR) */
         .gutter {
             width: 80px;
             border-right: 1px solid var(--border);
-            position: fixed; /* Stays put while scrolling */
-            height: 100vh;
+            position: fixed;
+            top: 40px;
+            height: calc(100vh - 40px);
+            background: var(--bg);
             display: flex;
             flex-direction: column;
-            padding-top: 20px;
-            color: var(--text-dim);
+            z-index: 100;
+        }
+
+        .coord-row {
+            padding: 8px 10px;
+            font-size: 10px;
             font-family: monospace;
-            font-size: 11px;
-            background: var(--bg);
-            z-index: 10;
+            color: var(--text-dim);
+            border-bottom: 1px solid transparent;
+            transition: all 0.1s;
         }
 
-        /* 2. DYNAMIC COORDINATE STYLE */
-        .coord-item {
-            padding: 5px 10px;
-            transition: color 0.2s, text-shadow 0.2s;
-        }
-
-        .active-coord {
+        .active-row {
             color: var(--accent);
+            background: rgba(0, 255, 65, 0.05);
             text-shadow: 0 0 8px var(--accent);
         }
 
+        /* MAIN CONTENT CONTAINER */
         main {
             margin-left: 80px;
+            margin-top: 40px;
             flex-grow: 1;
-            padding: 40px;
-        }
-
-        .header-meta {
             display: flex;
-            justify-content: space-between;
-            font-family: monospace;
-            font-size: 12px;
-            color: var(--accent);
-            margin-bottom: 60px;
-            position: sticky;
-            top: 40px;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px;
         }
 
-        .hero { text-align: center; margin-top: 10vh; margin-bottom: 100px; }
-        h1 { font-size: 3.5rem; text-transform: uppercase; letter-spacing: -2px; }
+        .loc-meta {
+            font-family: monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
 
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 1;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        .sub-headline {
+            color: #888;
+            text-align: center;
+            max-width: 600px;
+            font-size: 16px;
+            margin: 30px 0;
+            line-height: 1.5;
+        }
+
+        .explore-btn {
+            background: rgba(0, 255, 65, 0.2);
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+            padding: 12px 24px;
+            font-family: monospace;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 13px;
+            margin-bottom: 60px;
+            transition: 0.3s;
+        }
+
+        .explore-btn:hover { background: var(--accent); color: black; }
+
+        /* BENTO GRID */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            max-width: 1100px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 24px;
-            border-radius: 4px;
-            backdrop-filter: blur(4px);
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            transition: border 0.3s;
+        }
+
+        .card:hover { border-color: var(--accent); }
+
+        .card-tag {
+            font-family: monospace;
+            font-size: 10px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-family: monospace;
+            font-size: 13px;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
 
-    <div class="gutter" id="gutter-coords">
-        </div>
+    <header>
+        <div>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</div>
+        <div id="live-time">TIME: 2026.01.22 00:00:00 PST // PORT: 8080</div>
+    </header>
+
+    <div class="gutter" id="coord-gutter"></div>
 
     <main>
-        <div class="header-meta">
-            <span>USER: KELLY_ESPINO // STATUS: ACTIVE_SYSTEM</span>
-            <span id="live-clock">TIME: 0000.00.00 00:00:00 PST</span>
-        </div>
+        <div class="loc-meta">LOC // MNL_PH // INT_ARCH_V1.0</div>
+        
+        <h1>SYSTEMS DESIGNER &<br>TECHNICAL CREATIVE</h1>
+        
+        <p class="sub-headline">
+            Building intentional digital foundations through technical logic and creative vision.
+        </p>
 
-        <section class="hero">
-            <h1>SYSTEMS DESIGNER</h1>
-            <p style="color: var(--text-dim)">[ ARCHITECTURE_PORTFOLIO_V1 ]</p>
-        </section>
+        <a href="#" class="explore-btn">EXPLORE_PROJECTS</a>
 
         <div class="bento-grid">
-            <div class="card" style="grid-row: span 2;">DATA_VAULT</div>
-            <div class="card">LOGIC_FLOW</div>
-            <div class="card">INTERFACE_LAB</div>
-            <div class="card" style="grid-column: span 2;">CORE_SYSTEM_ANALYTICS</div>
+            <div class="card" style="grid-row: span 2;">
+                <span class="card-tag">CAT_01 // INTERFACE_DESIGN</span>
+                <div class="card-title">USER_FLOW_ARCHITECTURE</div>
+            </div>
+            <div class="card">
+                <span class="card-tag">CAT_02 // SYSTEM_LOGIC</span>
+                <div class="card-title">BACKEND_STRUCTURE.SQL</div>
+            </div>
+            <div class="card">
+                <span class="card-tag">CAT_03 // SYSTEMS_LOGIC</span>
+                <div class="card-title">DATA_FLOW_MAPS</div>
+            </div>
+            <div class="card">
+                <span class="card-tag">CAT_03 // TECHNICAL_LAB</span>
+                <div class="card-title">EXPERIMENTAL_MODULES</div>
+            </div>
+            <div class="card">
+                <span class="card-tag">EXPERIMENTAL_LAB</span>
+                <div class="card-title">PROTOTYPE_STAGING</div>
+            </div>
+            <div class="card" style="grid-column: span 2; min-height: 100px;">
+                <span class="card-tag">MODULE_04 // UI_SCRIPTS</span>
+                <div class="card-title">Automated user flow analysis.</div>
+            </div>
         </div>
     </main>
 
@@ -119,40 +216,36 @@
             const year = now.getFullYear();
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
-            const time = now.toLocaleTimeString('en-US', { hour12: false });
-            document.getElementById('live-clock').innerText = `TIME: ${year}.${month}.${day} ${time} PST`;
+            const time = now.toLocaleTimeString('en-GB', { hour12: false });
+            document.getElementById('live-time').innerText = `TIME: ${year}.${month}.${day} ${time} PST // PORT: 8080`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 2. DYNAMIC GUTTER COORDINATES
-        const gutter = document.getElementById('gutter-coords');
-        const totalItems = 30; // Number of "coordinates" to show in the side
-        
-        // Generate coordinates
-        for(let i=0; i < totalItems; i++) {
-            const div = document.createElement('div');
-            div.className = 'coord-item';
-            // Generating semi-random architectural "lat/long" style numbers
-            div.innerText = `14.${(6500 + i*10)} N`;
-            gutter.appendChild(div);
+        // 2. INTERACTIVE COORDINATE GUTTER
+        const gutter = document.getElementById('coord-gutter');
+        for (let i = 0; i < 40; i++) {
+            const row = document.createElement('div');
+            row.className = 'coord-row';
+            // Placeholder Lat/Long style
+            row.innerHTML = `[ 14.6${(530+i)} N ]`; 
+            gutter.appendChild(row);
         }
 
-        const coordElements = document.querySelectorAll('.coord-item');
-
-        // TRACK MOUSE Y-AXIS
+        const rows = document.querySelectorAll('.coord-row');
         window.addEventListener('mousemove', (e) => {
             const mouseY = e.clientY;
-            
-            coordElements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                const elCenter = rect.top + rect.height / 2;
-                
-                // If mouse is near the element's Y position
-                if (Math.abs(mouseY - elCenter) < 20) {
-                    el.classList.add('active-coord');
+            rows.forEach(row => {
+                const rect = row.getBoundingClientRect();
+                if (mouseY >= rect.top && mouseY <= rect.bottom) {
+                    row.classList.add('active-row');
+                    // Change inner text to show the actual Y pixel
+                    row.innerText = `[ Y: ${mouseY.toString().padStart(3, '0')} px ]`;
                 } else {
-                    el.classList.remove('active-coord');
+                    row.classList.remove('active-row');
+                    // Reset to coordinate style
+                    const index = Array.from(rows).indexOf(row);
+                    row.innerText = `[ 14.6${(530+index)} N ]`;
                 }
             });
         });
